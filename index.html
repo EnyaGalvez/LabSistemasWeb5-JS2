@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Blog | Lab 5</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <span class="brand-icon">📋</span>
+      <span class="brand-name">MiniBlog</span>
+    </div>
+    <div class="navbar-links">
+      <button class="nav-btn active" id="btn-home" onclick="showPage('home')">Inicio</button>
+      <button class="nav-btn" id="btn-create" onclick="showPage('create')">Crear Post</button>
+    </div>
+  </nav>
+
+  <div id="page-home" class="page active">
+    <div class="page-header">
+      <h1 class="page-title">Tablón de Posts</h1>
+      <p class="page-subtitle">Explora y busca publicaciones</p>
+    </div>
+
+    <div class="search-container">
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Buscar posts..."
+        oninput="handleSearchInput()"
+      />
+      <button class="search-btn" onclick="searchPosts()">Buscar</button>
+      <button class="clear-btn" id="clear-btn" onclick="clearSearch()" style="display:none;">✕ Limpiar</button>
+    </div>
+
+    <div id="posts-container">
+
+      <div id="state-idle" class="state-box state-idle">
+        <div class="state-icon">💤</div>
+        <p class="state-text">Presiona buscar para comenzar.</p>
+        <button class="btn-primary" onclick="loadPosts()">Ver todos los posts</button>
+      </div>
+
+      <div id="state-loading" class="state-box state-loading hidden">
+        <div class="spinner"></div>
+        <p class="state-text">Cargando posts...</p>
+      </div>
+
+      <div id="state-success" class="hidden">
+        <div id="posts-grid" class="posts-grid"></div>
+      </div>
+
+      <div id="state-empty" class="state-box state-empty hidden">
+        <div class="state-icon">🗂️</div>
+        <p class="state-text">No se encontraron posts con ese término.</p>
+        <button class="btn-secondary" onclick="clearSearch()">Ver todos los posts</button>
+      </div>
+
+      <div id="state-error" class="state-box state-error hidden">
+        <div class="state-icon">⚠️</div>
+        <p class="state-text" id="error-message">Ocurrió un error al cargar los posts.</p>
+        <button class="btn-danger" onclick="retryLoad()">Reintentar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="page-create" class="page hidden">
+    <div class="page-header">
+      <h1 class="page-title">Crear Post</h1>
+      <p class="page-subtitle">Comparte algo con la comunidad</p>
+    </div>
+
+    <div class="form-container">
+
+      <div id="form-state-idle">
+        <div class="form-group">
+          <label class="form-label" for="post-title">Título *</label>
+          <input type="text" id="post-title" class="form-input" placeholder="Escribe el título del post..." />
+          <span class="field-error hidden" id="err-title">El título es requerido.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="post-body">Contenido *</label>
+          <textarea id="post-body" class="form-textarea" placeholder="Escribe el contenido del post..." rows="6"></textarea>
+          <span class="field-error hidden" id="err-body">El contenido es requerido.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="post-tags">Tags (separados por coma)</label>
+          <input type="text" id="post-tags" class="form-input" placeholder="ej: tecnología, noticias, blog" />
+        </div>
+        <div class="form-actions">
+          <button class="btn-secondary" onclick="showPage('home')">Cancelar</button>
+          <button class="btn-primary" onclick="submitPost()">Publicar Post</button>
+        </div>
+      </div>
+
+      <div id="form-state-loading" class="state-box state-loading hidden">
+        <div class="spinner"></div>
+        <p class="state-text">Publicando tu post...</p>
+      </div>
+
+      <div id="form-state-success" class="state-box state-success hidden">
+        <div class="state-icon">✅</div>
+        <p class="state-text">¡Post publicado exitosamente!</p>
+        <div class="success-actions">
+          <button class="btn-primary" onclick="resetForm()">Crear otro post</button>
+          <button class="btn-secondary" onclick="showPage('home')">Ver posts</button>
+        </div>
+      </div>
+
+      <div id="form-state-error" class="state-box state-error hidden">
+        <div class="state-icon">⚠️</div>
+        <p class="state-text" id="form-error-message">Error al publicar el post.</p>
+        <button class="btn-danger" onclick="retrySubmit()">Reintentar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Laboratorio #5 — Sistemas y Tecnologías Web — UVG 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
