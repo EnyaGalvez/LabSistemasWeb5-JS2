@@ -1,6 +1,8 @@
 # Laboratorio 5 (6)
 This is a mini blog (bulletin board) developed with HTML, CSS and JS. The app consumes the public API DummyJSON - Posts to list, search and create posts, implemented with UI States idle, loading, success, empty and error.
 
+***GitHub pages link:** https://enyagalvez.github.io/LabSistemasWeb5-JS2/*
+
 ## Functionalities
 * Posts list: Shows all the posts in cards with a title, content, tags, likes and views.
 * Posts search: Filters posts by text using query params (?q=).
